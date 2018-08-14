@@ -1,0 +1,32 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+  }
+}
+
+apply plugin: "com.moowork.node"
+
+tasks.nodeSetup.onlyIf {
+    !tasks.nodeSetup.nodeDir.exists()
+}
+tasks.npmSetup.onlyIf {
+    !tasks.npmSetup.npmDir.exists()
+}
+tasks.npm_install.dependsOn(tasks.npmSetup)
+tasks.npm_install.dependsOn(tasks.nodeSetup)
+
+
+node {
+  version = '9.1.0' // Version of node to use.
+  npmVersion = '5.3.0'
+  distBaseUrl = 'https://nodejs.org/dist' // Base URL for fetching node distributions (change if you have a mirror).
+  download = true // Download node using above parameters.
+  nodeModulesDir = file("${projectDir}") // Set the work directory where node_modules should be located
+  workDir = file("${System.getProperty('user.home')}/.moowork/nodejs")
+  npmWorkDir = file("${System.getProperty('user.home')}/.moowork/npm")
+}

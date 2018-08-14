@@ -1,0 +1,8 @@
+{
+  "name": "vertx-require-urijs-reproducer",
+  "version": "1.0.0",
+  "description": "Reproduces require bug in resolving urijs npm package",
+  "dependencies": {
+    "urijs": "^1.19.1"
+  }
+}
